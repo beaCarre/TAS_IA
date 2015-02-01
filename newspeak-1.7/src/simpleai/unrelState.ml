@@ -42,9 +42,21 @@ sig
   val join: t -> t -> t
   val contains: t -> t -> bool
   val implies: (t * Simple.cmp * Int32.t) -> bool
+  val widen: t -> t -> t
+
   val neg: t -> t
   val add: t -> t -> t
+  val sub: t -> t -> t
+  val mult: t -> t -> t
+  val div: t -> t -> t
+  val modulo : t -> t -> t
+
   val is_safe_add: t -> t -> bool
+  val is_safe_sub: t -> t -> bool
+  val is_safe_mult: t -> t -> bool
+  val is_safe_div: t -> t -> bool
+  val is_safe_modulo: t -> t -> bool
+
   val guard: bop -> t -> t -> t
   val to_string: t -> string
 end
@@ -87,6 +99,8 @@ struct
 	      true
 	  with Exit -> false
     
+  let widen s1 s2 = s1 (* TODO *) 
+
 
   let join s1 s2 = 
     match (s1, s2) with
@@ -113,7 +127,12 @@ struct
   let apply_binop op x y =
     match op with
 	PlusI -> Val.add x y
-      | Gt | Eq -> failwith "Unsupported binary operator"
+      | MinusI -> Val.sub x y
+      | MultI -> Val.mult x y
+      | DivI -> Val.div x y
+      | Mod -> Val.modulo x y
+      | Gt
+      | Eq -> failwith "Unsupported binary operator"
       | _ -> Val.universe
 
   let rec eval_exp s e =
@@ -188,8 +207,11 @@ struct
 	  let v2 = eval_exp s e2 in
 	    match op with
 		PlusI -> Val.is_safe_add v1 v2
+	      | MinusI -> Val.is_safe_sub v1 v2
+	      | MultI -> Val.is_safe_mult v1 v2
+	      | DivI -> Val.is_safe_div v1 v2
+	      | Mod -> Val.is_safe_modulo v1 v2
 	      | Eq|Gt -> true
 	      | _ -> false
 	      
-
 end

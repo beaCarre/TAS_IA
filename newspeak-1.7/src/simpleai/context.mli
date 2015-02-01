@@ -33,3 +33,7 @@ val print_err: string -> unit
 
 val dot_output : bool ref
 val dot_filename : string ref
+val unroll : bool ref
+val nb_unroll : int ref
+val late_widening : bool ref
+val nb_late_widening : int ref

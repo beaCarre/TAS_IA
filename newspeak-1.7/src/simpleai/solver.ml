@@ -28,16 +28,18 @@
 
 open Simple
 
-module State = UnrelState.Make(Cst)
+module State = UnrelState.Make(Parity)
 
 let add_globals globals s =
   List.fold_left (fun s' x -> State.add_var x s') s globals
   
 
-let fixpoint f s = 
-  (* TODO : encode the Kleene fixpoint algorithm to get the least
-     fixpoint of f greater than s *)
-  s
+let rec fixpoint f s = 
+  let s' = f s in
+  if State.contains s s' then
+    s'
+  else 
+    fixpoint f (State.join s' s)
 
 let check_exp loc e s =
   let rec check e =

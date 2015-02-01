@@ -35,7 +35,9 @@ sig
     fundecs: (fid, fundec) Hashtbl.t;     (** table of all declared functions *)
     src_lang: Newspeak.src_lang;          (** source programming language *)
   }
-     
+	     
+  (* and cfg = (stmt * stmt list) list (\** control flow graph *\) *)
+       
   and fundec = blk
       
   and blk = stmt list
@@ -157,6 +159,8 @@ and vid = string
 and fid = string
     
 and integer = Int32.t
+
+(* and cfg = (stmt * stmt list) list	     *)
     
 let string_of_loc (_, line, _) = string_of_int line
   
@@ -247,11 +251,33 @@ let string_of_stmt = string_of_stmt ""
 let string_of_blk = string_of_blk ""
 
 
+
+
+(* let rec comput_blk blk = *)
+(*   match blk with *)
+(*     stmt::bl -> () *)
+(*   | [] -> () *)
+
+
+(* let comput_cfg prog =  *)
+(*   Hashtbl.fold (fun fid fundec  *)
+		    
+
+(*   Hashtbl.iter string_of_fundec prog.fundecs; *)
+  
+(*   fundecs: (fid, fundec) Hashtbl.t; *)
+  
+
+
+
 (* Generates a DOT based representation of the control flow graph of
    the program prog and writes it in the file names filename *)
 let to_dot prog filename = 
   let fid = open_out filename in
-  (* A compléter *)
+  (* let cfg = comput_cfg prog in *)
+  
+    
+
   close_out fid
 
 

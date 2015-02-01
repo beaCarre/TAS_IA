@@ -45,3 +45,7 @@ let print_err msg =
 
 let dot_output = ref false
 let dot_filename = ref ""
+let unroll = ref false
+let nb_unroll= ref 0
+let late_widening = ref false
+let nb_late_widening= ref 0

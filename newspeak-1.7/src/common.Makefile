@@ -43,7 +43,7 @@ OCAMLOPTCOMP=$(shell if ocamlopt.opt -v >/dev/null 2>&1; \
 		 else echo ocamlopt ; \
 		 fi)
 
-OCAMLOPT=$(OCAMLOPTCOMP) $(OCAMLOPTFLAGS)
+OCAMLOPT=$(OCAMLOPTCOMP) $(OCAMLOPTFLAGS) 
 OCAMLDEP=ocamldep
 OCAMLDOC=ocamldoc
 OCAMLLEX=ocamllex
@@ -60,6 +60,7 @@ CLEANFILES+=\
 	$(addsuffix .cmi,$(FILES)) \
 	$(addsuffix .cmx,$(FILES)) \
 	$(addsuffix .o,$(FILES))   \
+	$(addsuffix .annot,$(FILES)) \
 	$(addsuffix .cmp,$(FILES))
 
 ../bin/$(TARGET): $(CMX)

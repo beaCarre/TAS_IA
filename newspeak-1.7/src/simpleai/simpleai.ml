@@ -26,7 +26,9 @@
 let speclist = 
   [
     ("--verbose", Arg.Unit Context.set_verbose, "prints more details");
-    ("--to-dot", Arg.String (fun s -> Context.dot_filename := s;Context.dot_output := true),  "outputs a DOT representation of the CFG")
+    ("--to-dot", Arg.String (fun s -> Context.dot_filename := s;Context.dot_output := true),  "outputs a DOT representation of the CFG");
+    ("--unroll", Arg.Int (fun i -> Context.nb_unroll := i; Context.unroll := true), "unroll each loop n times");
+    ("--delay", Arg.Int (fun i -> Context.nb_late_widening := i; Context.late_widening := true), "use late widening n times");
   ]
 
 let process input =
