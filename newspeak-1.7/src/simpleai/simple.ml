@@ -250,7 +250,17 @@ let string_of_stmt = string_of_stmt ""
   
 let string_of_blk = string_of_blk ""
 
+let generate_num =
+  let cpt = ref 0 in
+  incr cpt; 
+  !cpt
 
+type node = {mutable name : string; 
+	     mutable successors : (string*node) list}
+
+let new_node name successors =
+  {name = name^(string_of_int (generate_num));
+   successors = successors }
 
 
 (* let rec comput_blk blk = *)

@@ -35,7 +35,10 @@ sig
   val contains: t -> t -> bool
     
   val join: t -> t -> t
-    
+
+  val widen: t -> t -> t
+
+   
   (** [add_var x s] adds variable [x] to the state [s]. Initially variable [x] 
       may take any value. *)
   val add_var: Simple.vid -> t -> t

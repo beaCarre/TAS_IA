@@ -58,3 +58,4 @@ sig
 end
 
 module Make(Val:Data): Sigs.State
+module MakeDisjonctive(Val:Data): Sigs.State

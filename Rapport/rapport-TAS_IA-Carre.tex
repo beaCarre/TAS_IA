@@ -1,0 +1,65 @@
+\documentclass[a4paper, 11pt]{article}
+\addtolength{\hoffset}{-1cm}
+\addtolength{\textwidth}{2cm}
+\usepackage[utf8]{inputenc}
+\usepackage[frenchb]{babel}
+\usepackage[T1]{fontenc}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{\vfill
+  \huge Extension d’un analyseur statique par
+interprétation abstraite
+\\
+}
+\author{
+  Béatrice Carré \\
+  \emph{Typage et Analyse Statique}
+}
+\date{\today\vfill}
+\begin{document}
+\maketitle
+
+
+\section{Domaines abstraits}
+Le premier domaine abstrait implémenté est le domaine des constantes. Celui-ci apportant trop peu d'informations sur l'analyse, le domaine des intervalles a été implémenté.
+Les intervalles sont représentés par un couple d'entiers sur 32 bits ou la valeur Top. L'implémentation a été faite en suivant les définitions données en cours. On détecte le dépassement de capacité par un passage à 64 bits.
+
+Un dernier domaine a été implémenté, le domaine de la parité. 
+
+
+\section{Déroulage des boucles}
+Le déroulage des boucles s'effectue grâce à l'option \emph{--unroll n}, où \emph{n} définit le nombre de déroulage de chaque boucle. Cette fonction a été implémentée dans \emph{solver.ml}, en transformant l'AST du programme avant d'effectuer l'analyse.
+
+\section{Widening retardé}
+Le widening retardé a été implémenté en modifiant le calcul du point fixe. Il s'active grâce à ne l'option \emph{--delay n}, où \emph{n} correspond au nombre d'itérations avant d'effectuer le widening pour chaque boucle.
+
+\section{Produit réduit}
+Le produit réduit a été implémenté dans \emph{reducedProduct.ml}. Les valeurs sont représentées par un couple correspondant aux valeurs des deux domaines concernés. Les fonctions de prédicats sont vérifiées si les fonctions équivalentes de chaque domaine retournent vrai.
+ Pour les autres on applique une réduction après application des fonctions équivalentes. Cette réduction est propre à chaque couple de domaine, c'est pour cela que \emph{ReducedProduct} est implémenté de façon globale : il attend un module \emph{Product} défini dans celui-ci, qui contient les deux domaines souhaités et la fonction de réduction.
+
+Un produit de domaines a été implémenté avec les domaines \emph{Interval} et \emph{Parity}.
+La réduction se fait de cette manière :
+\begin{itemize}
+\item Lorsque l'intervalle a une seule valeur, on peut alors en déduire la parité associée.
+\item Lorsque l'on connait la parité, on peut alors réduire l'intervalle si les bornes ne correpondent pas à cette parité.
+\end{itemize}
+Ce produit est défini dans le fichier \emph{interval\_parity.ml}
+
+\section{Analyse disjonctive}
+L'analyse disjonctive repose sur un domaine déjà existant, mais en effectuant une analyse par exécution possible du programme. On va donc manipuler une liste d'états. Les fonctions de transfert se font donc sur tous les états de la liste, de même pour les prédicats qui sont testés pour tous les états. Le \emph{join} se fait en concaténant les états, car on veut tous les garder, donc ne pas les fusionner. Pour ne pas ajouter trop d'états, on n'autorise l'ajout que s'il n'y a pas déjà un état supérieur à celui-ci, selon la relation d'ordre du domaine.
+
+\section{Lookahead Widening}
+La technique de \emph{Lookahead widening} présentée lors de la présentation d'article a été implémentée dans le fichier \emph{lookaheadWidening.ml}, comme décrite dans l'article.
+
+\section{Ajouts possibles}
+L'implémentation étant très modulaire, il est possible d'y ajouter des fonctionnalités.
+Par exemple :
+\begin{itemize}
+\item Une fonction de narrowing, permettant de réduire l'état après une opération de widening
+\item La possibilité de widening étagé, permettant une surapproximation plus petite.
+\item L'affichage du CFG, avec l'option \emph{--todot}, permattant de mieux entrevoir les étapes du programme
+\item L'ajout de nouveaux domaines, comme celui des polyèdres
+\end{itemize}
+\end{document}

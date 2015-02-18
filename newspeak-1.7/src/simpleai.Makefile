@@ -35,8 +35,10 @@ FILES=version utils/strSet \
       newspeak/npkcontext newspeak/lowspeak newspeak/npk2lpk \
       simpleai/context simpleai/simple \
       simpleai/filter simpleai/sigs \
-      simpleai/unrelState simpleai/cst simpleai/interval simpleai/parity \
-      simpleai/solver simpleai/simpleai
+      simpleai/unrelState simpleai/reducedProduct \
+      simpleai/cst simpleai/interval simpleai/parity \
+      simpleai/interval_parity \
+      simpleai/lookaheadWidening simpleai/solver simpleai/simpleai
 
 FILES.CMO=$(addsuffix .cmo,$(FILES))
 FILES.CMX=$(addsuffix .cmx,$(FILES))

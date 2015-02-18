@@ -35,5 +35,6 @@ val dot_output : bool ref
 val dot_filename : string ref
 val unroll : bool ref
 val nb_unroll : int ref
-val late_widening : bool ref
-val nb_late_widening : int ref
+val delayed_widening : bool ref
+val nb_delayed_widening : int ref
+val final_state : bool ref
